@@ -1,1 +1,1 @@
-# oybekrustamov.gihub.io
+# oybekrustamov.github.io
