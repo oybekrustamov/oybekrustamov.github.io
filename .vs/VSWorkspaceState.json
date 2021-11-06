@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\MDEV",
+    "\\MDEV\\practise",
+    "\\MDEV\\theory"
   ],
+  "SelectedNode": "\\MDEV\\practise\\1.html",
   "PreviewInSolutionExplorer": false
 }
