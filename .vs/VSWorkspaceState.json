@@ -2,8 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\MDEV",
-    "\\MDEV\\theory"
+    "\\MDEV\\theory",
+    "\\telebot"
   ],
-  "SelectedNode": "\\MDEV\\theory\\style.css",
   "PreviewInSolutionExplorer": false
 }
