@@ -1,9 +1,83 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 <body>
-    ������ ������ ��� ����������<br />����� ������� :)
+    <div style="margin:20px;">
+        <center>
+            <img src="http://moquet.net/uploads/blog/2015-04-16-realtime-geolocation-tracking-firebase/locatme-banner.png" width="90%" />
+        </center>
+        <h3><b>Работа с геолокацией Андроид.</b></h3>
+        <p>В настоящее время работа с геолокационными сервисами наиболее популярна в среде программистов. Android имеет широкую поддержку всех видов разработки, связанных с геолокацией.</p>
+        <p>Основные примеры использования геолокации - определить собственное местонахождение, определить координаты какого-нибудь объекта, а также связать эти координаты с другими задачами - показать соседние кафе и рестораны, город, страну и т.д.</p>
+
+        <hr />
+        <p>Итак, как это работает?</p>
+        <p>
+            <ul>
+                <li>создаем класс MyLocationListener</li>
+                <li>копируем в него код написанный ниже</li>
+                <li>в основной функции (например MainActivity) ближе к началу запускаем:</li>
+            </ul>
+        </p>
+        <p><b>MyLocationListener:</b></p>
+        <pre>import android.content.Context;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+
+class MyLocationListener implements LocationListener {
+
+	static Location imHere; // здесь будет всегда доступна самая последняя информация о местоположении пользователя.
+	
+    public static void SetUpLocationListener(Context context) // это нужно запустить в самом начале работы программы
+	{
+		LocationManager locationManager = (LocationManager) 
+				context.getSystemService(Context.LOCATION_SERVICE);
+		
+		LocationListener locationListener = new MyLocationListener();  
+		
+		locationManager.requestLocationUpdates(
+				LocationManager.GPS_PROVIDER,
+				5000,
+				10,
+				locationListener); // здесь можно указать другие более подходящие вам параметры
+
+		imHere = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+	}
+
+    @Override
+    public void onLocationChanged(Location loc) {
+		imHere = loc;
+    }
+    @Override
+    public void onProviderDisabled(String provider) {}
+    @Override
+    public void onProviderEnabled(String provider) {}
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {}
+}</pre>
+        <hr />
+        <pre>MyLocationListener.SetUpLocationListener(this);</pre>
+        <p>или для любителей потоков</p>
+        <pre>
+final Context mainContext = this;
+		  new Thread(new Runnable() {
+			    @Override
+				public void run() {
+			        MyLocationListener.SetUpLocationListener(mainContext);
+			    }
+			}).start();
+</pre>
+
+        <hr />
+        <p>теперь у нас всегда и в любой части нашего проекта есть переменная <b>MyLocationListener.imHere</b> типа Location, в которой хранится самое последнее местоположение пользователя и множество дополнительной информации, как например скорость или точность определения местоположения.</p>
+        <p><b>Не забудьте: в зависимости от выбранного провайдера нужно добавить в манифест соответствующее разрешение. Например используемый выше GPS_PROVIDER требует добавления следующей строчки в манифест:</b></p>
+        <pre><uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /></pre>
+        <br />
+
+    </div>
 </body>
 </html>
-
